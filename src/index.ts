@@ -1,4 +1,4 @@
-import type { Task, NewTask, UpdateTask } from "./dto/Tasks.js";
+import type { Task, NewTask, UpdateTask, Filters } from "./dto/Tasks.js";
 import { Status, Priority } from "./dto/Tasks.js";
 import tasksJSON from "./tasks.json" with { type: "json" };
 import { validateTasks } from "./validateTask.js";
@@ -99,7 +99,9 @@ const filterByCreationDate = (date: Date): Task[] => {
 console.log(filterByCreationDate(new Date()));
 
 
-const filterTasks =  (filters: {status?: Status, priority?: Priority, createdAt?: Date}):Task[] => 
+
+
+const filterTasks =  (filters: Filters):Task[] => 
    tasks.filter(task => filters?.status ? task.status === filters.status : true)
                       .filter(task => filters?.priority ? task.priority === filters.priority : true)
                       .filter(task => filters?.createdAt ? isSameDay(task.createdAt, filters.createdAt) : true)

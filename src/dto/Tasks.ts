@@ -12,6 +12,8 @@ export enum Priority {
   High = "high",
 }
 
+export type Filters = { status?: Status; priority?: Priority; createdAt?: Date };
+
 export const taskSchema = z.object({
   id: z.union([z.number(), z.string()]),
   title: z.string().min(1, "Title cannot be empty"),
