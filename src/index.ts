@@ -99,26 +99,16 @@ const filterByCreationDate = (date: Date): Task[] => {
 console.log(filterByCreationDate(new Date()));
 
 
-const filterTasks =  (filters: {status?: Status, priority?: Priority, createdAt?: Date}):Task[] => {
-  let filterTasks = [...tasks];
+const filterTasks =  (filters: {status?: Status, priority?: Priority, createdAt?: Date}):Task[] => 
+   tasks.filter(task => filters?.status ? task.status === filters.status : true)
+                      .filter(task => filters?.priority ? task.priority === filters.priority : true)
+                      .filter(task => filters?.createdAt ? isSameDay(task.createdAt, filters.createdAt) : true)
 
-  if(filters.createdAt) {
-    filterTasks = filterByCreationDate(filters.createdAt);
-  }
-
-  if(filters.priority) {
-    filterTasks = filterByPriority(filters.priority);
-  }
   
-  if(filters.status) {
-    filterTasks = filterBuyStatus(filters.status);
-  }
 
-  return filterTasks;
-}
 
 // всі завдання створені сьогодні
-console.log(filterTasks({status: Status.InProgress, priority: Priority.High, createdAt: new Date()}));
+console.log("всі завдання створені сьогодні, з статусом in_progres, і високим пріорітетом", filterTasks({status: Status.InProgress, priority: Priority.High, createdAt: new Date()}));
 
 
 const isDoneToDeadline = (id: number | string): boolean | undefined => {
